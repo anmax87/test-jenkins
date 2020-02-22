@@ -1,6 +1,6 @@
 resource "aws_key_pair" "terraform_key" {
   key_name = "terraform_key"
-    public_key = file("~/.ssh/terraform_key.pub")
+    public_key = "$ssh_public_key"
 }
 
 resource "aws_security_group" "allow_ssh" {
