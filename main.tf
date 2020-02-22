@@ -54,6 +54,7 @@ resource "aws_instance" "web" {
   ami           = "${data.aws_ami.centos.id}"
   instance_type = "t2.micro"
   key_name = "terraform_key"
+  availability_zone = "us-west-2"
   vpc_security_group_ids = ["${aws_security_group.allow_ssh.id}"]
   
   tags = {
