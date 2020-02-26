@@ -1,9 +1,9 @@
 node('AgentDocker')
 stage('Checkout external proj') {
         steps {
-            git (branch: "master",
-                credentialsId: "git",
-                url: "ssh://git@github.com:anmax87/test-jenkins.git")
+            git (branch: 'master',
+                credentialsId: 'git',
+                url: 'git@github.com:anmax87/test-jenkins.git')
 
             sh "ls -lat"
         }
