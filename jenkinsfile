@@ -1,4 +1,4 @@
-node('AgentDocker')
+node('AgentDocker') {
 stage('Checkout external proj') {
     git (branch: 'master',
     credentialsId: 'git',
@@ -15,4 +15,5 @@ stage('Add cred & terraform plan') {
             sh "terraform init"
             sh "terraform plan"
         }
+}
 }
