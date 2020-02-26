@@ -11,7 +11,7 @@ stage('Check terraform version') {
 }
 stage('Add cred & terraform plan') {
     withCredentials([string(credentialsId: 'access_key', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'secret_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-    sh "export AWS_DEFAULT_REGION='us-west-2'"
+    sh 'export AWS_DEFAULT_REGION="us-west-2"'
     sh "terraform init"
     sh "terraform plan"
     }
