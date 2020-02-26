@@ -1,3 +1,6 @@
+provider "aws" {
+  region     = "us-west-2"
+}
 resource "aws_key_pair" "terraform_key" {
   key_name = "terraform_key"
     public_key = "$ssh_public_key"
