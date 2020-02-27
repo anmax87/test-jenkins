@@ -4,27 +4,21 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
     }
-  agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
-  stages {
-    stage('Cloning Git') {
-      steps {
-        git 'https://github.com/jenkins-docs/simple-java-maven-app'
-      }
-    }
+  agent any
+  
     stage('Build') {
        steps {
+           withMaven(maven : 'apache-maven-3.6.1') {
          sh 'mvn -B -DskipTests clean package'
+       }
        }
     }
     stage('Test') {
       steps {
+          withMaven(maven : 'apache-maven-3.6.1') {
         sh 'mvn test'
         }
+      }
       post {
         always {
             junit 'target/surefire-reports/*.xml'
