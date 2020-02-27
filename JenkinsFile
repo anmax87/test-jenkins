@@ -8,14 +8,14 @@ pipeline {
   stages {
     stage('Build') {
        steps {
-           withMaven(maven:3-alpine) {
+           withMaven(maven:latest) {
          sh 'mvn -B -DskipTests clean package'
        }
        }
     }
     stage('Test') {
       steps {
-          withMaven(maven:3-alpine) {
+          withMaven(maven:latest) {
         sh 'mvn test'
         }
       }
