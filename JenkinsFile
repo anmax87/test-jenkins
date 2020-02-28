@@ -6,19 +6,20 @@ pipeline {
     }
   agent any
   stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/jenkins-docs/simple-java-maven-app'
+      }
+    }
     stage('Build') {
        steps {
-           withMaven(maven:latest) {
          sh 'mvn -B -DskipTests clean package'
-       }
        }
     }
     stage('Test') {
       steps {
-          withMaven(maven:latest) {
         sh 'mvn test'
         }
-      }
       post {
         always {
             junit 'target/surefire-reports/*.xml'
