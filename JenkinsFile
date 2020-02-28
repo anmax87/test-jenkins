@@ -6,11 +6,7 @@ pipeline {
     }
   agent any
   stages {
-    stage('Cloning Git') {
-      steps {
-        git 'https://github.com/jenkins-docs/simple-java-maven-app'
-      }
-    }
+    
     stage('Build') {
        steps {
          sh 'mvn -B -DskipTests clean package'
