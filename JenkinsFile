@@ -36,6 +36,14 @@ environment {
         sh "docker -v"
       }
     }
+    stage('unstash our application'){
+        unstash 'artifactStash'
+        sh 'ls -lah'
+        withEnv(["PATH=${env.PATH}:${tool name: 'docker-latest'}/bin"]){
+            sh 'docker ps -a'
+        } 
+    }
+    
 //    stage('Deliver') {
 //            steps {
 //                sh './jenkins/scripts/deliver.sh'
