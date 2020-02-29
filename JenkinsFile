@@ -39,7 +39,7 @@ environment {
     stage('unstash our application'){
         unstash 'artifactStash'
         sh 'ls -lah'
-        withEnv(["PATH=${env.PATH}:${tool name: 'docker-latest'}/bin"]){
+        withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
             sh 'docker ps -a'
         } 
     }
