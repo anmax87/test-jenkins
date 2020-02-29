@@ -7,26 +7,35 @@ pipeline {
   node('AgentDocker') {
     tool name: 'apache-maven', type: 'maven'
     stages {
+      stage('Cloning Git') {
+        steps {
+          git 'https://github.com/anmax87/test-jenkins'
+        }
+    }
       stage('Build') {
-       steps {
-         sh 'mvn -B -DskipTests clean package'
-       }
+        withEnv(["PATH=${env.PATH}:${tool 'apache-maven'}/bin"]){
+          steps {
+            sh 'mvn -B -DskipTests clean package'
+        }
+      }
     }
-    stage('Test') {
-      steps {
-        sh 'mvn test'
+      stage('Test') {
+        withEnv(["PATH=${env.PATH}:${tool 'apache-maven'}/bin"]){
+          steps {
+            sh 'mvn test'
         }
-      post {
-        always {
-            junit 'target/surefire-reports/*.xml'
-            }
+          post {
+            always {
+              junit 'target/surefire-reports/*.xml'
+          }
         }
+      }
     }
-    stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
+//    stage('Deliver') {
+//            steps {
+//                sh './jenkins/scripts/deliver.sh'
+//            }
+//        }
     stage('Building image') {
       steps{
         script {
