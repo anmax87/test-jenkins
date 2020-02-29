@@ -5,9 +5,9 @@ pipeline {
     dockerImage = ''
     }
   node('AgentDocker') {
-  tool name: 'apache-maven', type: 'maven'
-  stages {
-    stage('Build') {
+    tool name: 'apache-maven', type: 'maven'
+    stages {
+      stage('Build') {
        steps {
          sh 'mvn -B -DskipTests clean package'
        }
