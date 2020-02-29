@@ -5,7 +5,7 @@ environment {
     }
   node('AgentDocker') {
     tool name: 'apache-maven', type: 'maven'
-    stages {
+ 
       stage('Cloning Git') {
         steps {
           git 'https://github.com/anmax87/test-jenkins'
@@ -56,5 +56,5 @@ environment {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-  }
+  
   }
