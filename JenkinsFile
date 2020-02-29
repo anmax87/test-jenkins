@@ -5,7 +5,7 @@ pipeline {
     dockerImage = ''
     }
   node('AgentDocker') {
-  withMaven {
+  tool name: 'apache-maven', type: 'maven'
   stages {
     stage('Build') {
        steps {
@@ -48,7 +48,6 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-  }
   }
   }
 }
