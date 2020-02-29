@@ -16,22 +16,14 @@ environment {
         
       stage('Build') {
         withEnv(["PATH=${env.PATH}:${tool 'apache-maven'}/bin"]){
-          steps {
             sh 'mvn -B -DskipTests clean package'
-        }
       }
     }
       stage('Test') {
         withEnv(["PATH=${env.PATH}:${tool 'apache-maven'}/bin"]){
-          steps {
             sh 'mvn test'
         }
-          post {
-            always {
-              junit 'target/surefire-reports/*.xml'
-          }
-        }
-      }
+          
     }
 //    stage('Deliver') {
 //            steps {
