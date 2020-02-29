@@ -1,5 +1,4 @@
-pipeline {
-  environment {
+environment {
     registry = "anmaxx/jenkins-maven"
     registryCredential = 'dockerhub'
     dockerImage = ''
@@ -59,4 +58,3 @@ pipeline {
     }
   }
   }
-}
