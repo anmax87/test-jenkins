@@ -31,6 +31,10 @@ environment {
       tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     stage('Ckeck prerequest'){
         echo "${tool 'docker-latest'}"
+        sh "ls -lah"
+        withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
+        sh "docker -v"
+      }
     }
 //    stage('Deliver') {
 //            steps {
