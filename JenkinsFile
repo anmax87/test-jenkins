@@ -4,12 +4,8 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
     }
-  agent {
-        docker {
-            image 'maven:apache-maven'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+  node('AgentDocker') {
+  withMaven {
   stages {
     stage('Build') {
        steps {
@@ -52,5 +48,7 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
+  }
+  }
   }
 }
