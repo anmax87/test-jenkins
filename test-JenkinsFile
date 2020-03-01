@@ -20,23 +20,15 @@
     withMaven(maven: 'apache-maven') {
         sh 'mvn test'
         }
-      post {
-        always {
-            junit 'target/surefire-reports/*.xml'
-            }
-        }
+
     }
     stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
+            sh './jenkins/scripts/deliver.sh'
         }
     stage('Building image') {
-      steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
             }
-        }
     }
     stage('Deploy Image') {
       steps{
