@@ -34,9 +34,8 @@
     }
     stage('Building image') {
         withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
-        script {
-            dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
-            }
+
+            def dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
             dockerImage.inside {
                 sh 'java -jar /tmp/myapp.jar'
             }
