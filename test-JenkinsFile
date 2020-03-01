@@ -12,18 +12,18 @@
           sh "ls -lat"
         }
     stage('Build') {
-    withMaven(jdk: 'jdk', maven: 'apache-maven') {
+    withMaven(maven: 'apache-maven') {
          sh 'mvn -B -DskipTests clean package'
        }
     }
     stage('Test') {
-    withMaven(jdk: 'jdk', maven: 'apache-maven') {
+    withMaven(maven: 'apache-maven') {
         sh 'mvn test'
         }
 
     }
     stage('Deliver') {
-        withMaven(jdk: 'jdk', maven: 'apache-maven') {
+        withMaven(maven: 'apache-maven') {
             sh './jenkins/scripts/deliver.sh'
         }
     }
