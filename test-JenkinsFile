@@ -30,7 +30,7 @@
     stage('Building image') {
         script {
        
-          dockerImage = docker.build("registry:${env.BUILD_ID}")
+          dockerImage = docker.build("$registry:${env.BUILD_ID}")
             }
     }
     stage('Deploy Image') {
