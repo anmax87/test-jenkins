@@ -34,7 +34,7 @@
     stage('Building image') {
         tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
         script {
-            dockerImage = docker.build("nmaxx/jenkins-maven:${env.BUILD_ID}")
+            dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
             }
     }
     stage('Deploy Image') {
