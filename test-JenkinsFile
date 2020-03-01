@@ -25,7 +25,7 @@
     stage('Deliver') {
         withMaven(maven: 'apache-maven') {
             sh "ls -lah target/"
-            sh 'my-app-1.0-SNAPSHOT.jar'            
+            sh 'java -jar target/my-app-1.0-SNAPSHOT.jar'            
         }
     }
     stage('Building image') {
