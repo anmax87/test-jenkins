@@ -27,7 +27,7 @@ environment {
           
     }
   }
-  node('AgentDocker') {
+  node('AgentDocker1') {
       tool name: 'docker-latest'
     stage('Ckeck prerequest'){
         echo "${tool 'docker-latest'}"
