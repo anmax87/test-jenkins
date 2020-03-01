@@ -37,6 +37,9 @@
         script {
             dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
             }
+            dockerImage.inside {
+                sh 'java -jar /tmp/myapp.jar'
+            }
         }
     }
     stage('Deploy Image') {
