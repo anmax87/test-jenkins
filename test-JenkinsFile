@@ -4,6 +4,7 @@
     dockerImage = ''
     }
  node('AgentDocker') {
+    tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     stage('Cloning Git') {
       git (branch: 'master',
         credentialsId: 'git',
@@ -32,10 +33,11 @@
     sh "ls -lat"
     }
     stage('Building image') {
-        tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
         script {
             dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
             }
+        }
     }
     stage('Deploy Image') {
       steps{
