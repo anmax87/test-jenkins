@@ -19,14 +19,11 @@
     stage('Test') {
     withMaven(maven: 'apache-maven') {
         sh 'mvn test'
+        sh "ls -lah target/"
         }
 
     }
-    stage('Deliver') {
-        withMaven(maven: 'apache-maven') {
-            sh "ls -lah target/"         
-        }
-    }
+    
     stage('Checkout external proj') {
     git (branch: 'master',
     credentialsId: 'git',
