@@ -28,7 +28,7 @@ environment {
     }
   }
   node('AgentDocker') {
-      tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+      tool name: 'docker-latest'
     stage('Ckeck prerequest'){
         echo "${tool 'docker-latest'}"
         sh "ls -lah"
