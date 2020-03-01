@@ -1,0 +1,55 @@
+  environment {
+    registry = "anmaxx/jenkins-maven"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+    }
+ node('AgentDocker') {
+    stage('Cloning Git') {
+      git (branch: 'master',
+        credentialsId: 'git',
+        url: 'git@github.com:jenkins-docs/simple-java-maven-app.git')
+
+          sh "ls -lat"
+        }
+    stage('Build') {
+    withMaven(maven: 'apache-maven') {
+         sh 'mvn -B -DskipTests clean package'
+       }
+    }
+    stage('Test') {
+    withMaven(maven: 'apache-maven') {
+        sh 'mvn test'
+        }
+      post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+            }
+        }
+    }
+    stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+        }
+    }
+    stage('Deploy Image') {
+      steps{
+         script {
+            docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+  }
