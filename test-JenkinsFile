@@ -25,6 +25,7 @@
     stage('Deliver') {
         withMaven(maven: 'apache-maven') {
             sh './jenkins/scripts/deliver.sh'
+            sh "ls -lat /target"
         }
     }
     stage('Building image') {
