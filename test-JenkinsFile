@@ -32,9 +32,10 @@
     sh "ls -lat"
     }
     stage('Building image') {
-        checkout scm
-        def dockerImage = docker.build("nmaxx/jenkins-maven:${env.BUILD_ID}")
-        
+        tool name: 'docker-latest', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        script {
+            dockerImage = docker.build("nmaxx/jenkins-maven:${env.BUILD_ID}")
+            }
     }
     stage('Deploy Image') {
       steps{
