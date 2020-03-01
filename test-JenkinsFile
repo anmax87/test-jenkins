@@ -24,9 +24,7 @@
     }
     stage('Deliver') {
         withMaven(maven: 'apache-maven') {
-            sh "ls -lah target/"
-            sh "java -jar target/my-app-1.0-SNAPSHOT.jar"
-            sh 'mvn help:evaluate -Dexpression=project.name | grep "^[^\[]"'            
+            sh "ls -lah target/"         
         }
     }
     stage('Building image') {
