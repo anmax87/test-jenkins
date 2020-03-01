@@ -24,7 +24,7 @@
     }
     stage('Deliver') {
         withMaven(maven: 'apache-maven') {
-            sh "ls -lah"
+            sh "ls -lah target/"
             sh './jenkins/scripts/deliver.sh'            
         }
     }
