@@ -26,7 +26,7 @@
         withMaven(maven: 'apache-maven') {
             sh "ls -lah target/"
             sh "java -jar target/my-app-1.0-SNAPSHOT.jar"
-            sh 'NAME=`mvn help:evaluate -Dexpression=project.name | grep "^[^\[]"`            
+            sh 'mvn help:evaluate -Dexpression=project.name | grep "^[^\[]"'            
         }
     }
     stage('Building image') {
