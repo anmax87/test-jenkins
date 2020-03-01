@@ -27,6 +27,13 @@
             sh "ls -lah target/"         
         }
     }
+    stage('Checkout external proj') {
+    git (branch: 'master',
+    credentialsId: 'git',
+    url: 'git@github.com:anmax87/test-jenkins.git')
+
+    sh "ls -lat"
+    }
     stage('Building image') {
         script {
  //         dockerImage = docker.build $registry + ":$BUILD_NUMBER"
