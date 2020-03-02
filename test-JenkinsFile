@@ -39,7 +39,7 @@
     }
     stage('Deploy Image') {
         withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
-            step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: true, cloud: 'docker', dockerFileDirectory: '', fromRegistry: [credentialsId: 'dockerhub'], noCache: true, pull: true, pushCredentialsId: 'dockerhub', pushOnSuccess: true, tagsString: ''])
+            step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: true, cloud: 'docker', dockerFileDirectory: '', fromRegistry: [credentialsId: 'dockerhub', url: 'https://registry-1.docker.io/v2/'], noCache: true, pull: true, pushCredentialsId: 'dockerhub', pushOnSuccess: true, tagsString: ''])
  //           docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub') {
  //           dockerImage.push()
  //         }
