@@ -1,9 +1,4 @@
-environment {
-    registry = "anmaxx/jenkins-maven"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-    }
-  node('AgentDocker') {
+node('AgentDocker') {
     tool name: 'apache-maven', type: 'maven'
  
       stage('Checkout external proj') {
@@ -27,7 +22,7 @@ environment {
           
     }
   }
-  node('AgentDocker1') {
+node('AgentDocker1') {
       tool name: 'docker-latest'
     stage('Ckeck prerequest'){
         echo "${tool 'docker-latest'}"
@@ -36,41 +31,35 @@ environment {
         sh "docker -v"
       }
     }
+    stage('Checkout external proj') {
+      git (branch: 'master',
+      credentialsId: 'git',
+      url: 'git@github.com:anmax87/test-jenkins.git')
+
+        sh "ls -lat"
+    }
     stage('unstash our application'){
         unstash 'artifactStash'
         sh 'ls -lah'
         withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
-            sh 'docker ps -a'
+          sh 'docker ps -a'
         } 
     }
-    
-//    stage('Deliver') {
-//            steps {
-//                sh './jenkins/scripts/deliver.sh'
-//            }
-//        }
-//    stage('Building image') {
-//      steps{
-//        script {
-//          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-//            }
-//        }
-//    }
-//    stage('Deploy Image') {
-//      steps{
-//         script {
-//            docker.withRegistry( '', registryCredential ) {
-//            dockerImage.push()
-//          }
-//        }
-//      }
-//    }
-//    stage('Remove Unused docker image') {
-//      steps{
-//        sh "docker rmi $registry:$BUILD_NUMBER"
-//      }
-//    }
-  
+    stage('Deploy Image') {
+        script {
+            withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker-latest') {
+              withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
+              def dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
+              dockerImage.push()
+            }
+          }            
+        }
+    }
+    stage('Remove Unused docker image') {
+      withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
+        sh "docker rmi anmaxx/jenkins-maven:$BUILD_NUMBER"
+      }
+    }
   }
 
 
