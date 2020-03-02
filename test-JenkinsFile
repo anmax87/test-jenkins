@@ -34,25 +34,19 @@
     }
     stage('Building image') {
         withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
-
             def dockerImage = docker.build("anmaxx/jenkins-maven:${env.BUILD_ID}")
-            dockerImage.inside {
-                sh 'java -jar /tmp/myapp.jar'
-            }
         }
     }
     stage('Deploy Image') {
-      steps{
-         script {
+        withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
             docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
-      }
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi anmaxx/jenkins-maven:$BUILD_NUMBER"
       }
     }
   }
