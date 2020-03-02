@@ -39,7 +39,7 @@
     }
     stage('Deploy Image') {
         withEnv(["PATH=${env.PATH}:${tool 'docker-latest'}/bin"]){
-            docker.withRegistry('', 'dockerhub') {
+            docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
             dockerImage.push()
           }
         }
